@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Confirm Solve</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 15px;
+            margin: 0;
+        }
+
+        h2 {
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 16px;
+            font-size: 16px;
+            margin: 10px 5px 0 0;
+        }
+
+        @media (max-width: 600px) {
+            h2 {
+                font-size: 20px;
+            }
+
+            button {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h2>Confirm Complaint Resolution</h2>
+    <p>Are you sure you want to mark this complaint as solved?</p>
+
+    <p><strong>Complaint:</strong> {{ complaint.complaint_1 }}<br>
+    <strong>From:</strong> {{ complaint.received_from }}<br>
+    <strong>House:</strong> {{ complaint.house_name }}</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <label for="solution_details">Solution Details:</label><br>
+        <textarea name="solution_details" rows="4" cols="50" required></textarea><br><br>
+        <button type="submit">Yes, Mark as Solved</button>
+        <a href="{% url 'unsolved_complaints' %}"><button type="button">Cancel</button></a>
+    </form>
+</body>
+</html>
+
+</head>
+<body>
+    <h2>Confirm Complaint Resolution</h2>
+    <p>Are you sure you want to mark this complaint as solved?</p>
+
+    <p><strong>Complaint:</strong> {{ complaint.complaint_1 }}<br>
+    <strong>From:</strong> {{ complaint.received_from }}<br>
+    <strong>House:</strong> {{ complaint.house_name }}</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <label for="solution_details">Solution Details:</label><br>
+        <textarea name="solution_details" rows="4" cols="50" required></textarea><br><br>
+        <button type="submit">Yes, Mark as Solved</button>
+        <a href="{% url 'unsolved_complaints' %}"><button type="button">Cancel</button></a>
+    </form>
+</body>
+</html>

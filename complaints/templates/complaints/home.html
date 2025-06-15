@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Complaint Tracker - Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            margin: 0;
+            background: #f9f9f9;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        li {
+            margin-bottom: 15px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #333;
+            font-size: 18px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .button-group {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 300px;
+        }
+
+        button {
+            padding: 12px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 22px;
+            }
+
+            a {
+                font-size: 16px;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to the Complaint Tracker</h1>
+
+    <ul>
+        <li><a href="{% url 'register_complaint' %}">➕ Register New Complaint</a></li>
+        <li><a href="{% url 'unsolved_complaints' %}">📋 View Unsolved Complaints</a></li>
+        <li><a href="{% url 'solved_complaints' %}">✅ View Solved Complaints</a></li>
+    </ul>
+
+    {% if user.is_authenticated and user.is_superuser %}
+        <h2>Export Complaint Reports</h2>
+        <div class="button-group">
+            <a href="{% url 'export_report' %}?period=weekly"><button>Export Weekly Report</button></a>
+            <a href="{% url 'export_report' %}?period=monthly"><button>Export Monthly Report</button></a>
+        </div>
+    {% endif %}
+</body>
+</html>

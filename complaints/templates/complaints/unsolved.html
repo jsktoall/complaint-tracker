@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pending Complaints</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            margin: 0;
+            background-color: #f2f2f2;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .complaint-box {
+            background: #fff;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+        }
+
+        .complaint-box p {
+            margin: 6px 0;
+        }
+
+        .complaint-box ul {
+            margin-top: 10px;
+            padding-left: 20px;
+        }
+
+        .action-link {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 12px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .action-link:hover {
+            background-color: #218838;
+        }
+
+        button {
+            padding: 10px 18px;
+            font-size: 16px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        @media (max-width: 600px) {
+            .complaint-box {
+                padding: 12px;
+            }
+
+            h1 {
+                font-size: 22px;
+            }
+
+            button {
+                width: 100%;
+            }
+
+            .action-link {
+                width: 100%;
+                text-align: center;
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Pending Complaints</h1>
+
+    {% if complaints %}
+        {% for complaint in complaints %}
+            <div class="complaint-box">
+                <p><strong>Complaint No:</strong> {{ complaint.complaint_number }}</p>
+                <p><strong>Date Received:</strong> {{ complaint.date_received }}</p>
+                <p><strong>No. of days since complaint:</strong> {{ complaint.days_since }}</p>
+
+                <ul>
+                    {% if complaint.complaint_1 %}<li>{{ complaint.complaint_1 }}</li>{% endif %}
+                    {% if complaint.complaint_2 %}<li>{{ complaint.complaint_2 }}</li>{% endif %}
+                    {% if complaint.complaint_3 %}<li>{{ complaint.complaint_3 }}</li>{% endif %}
+                    {% if complaint.complaint_4 %}<li>{{ complaint.complaint_4 }}</li>{% endif %}
+                    {% if complaint.complaint_5 %}<li>{{ complaint.complaint_5 }}</li>{% endif %}
+                </ul>
+
+                <p><strong>Details:</strong> {{ complaint.complaint_details }}</p>
+                <p><strong>From:</strong> {{ complaint.received_from }} |
+                   <strong>House:</strong> {{ complaint.house_name }} |
+                   <strong>Forwarded to:</strong> {{ complaint.forwarded_to }}</p>
+
+                <a class="action-link" href="{% url 'confirm_solve' complaint.id %}">Mark as Solved</a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No pending complaints.</p>
+    {% endif %}
+
+    <a href="{% url 'home' %}"><button>Back to Home</button></a>
+
+</body>
+</html>
