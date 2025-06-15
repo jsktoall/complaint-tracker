@@ -23,7 +23,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-m*w&hm7_rs4v5_m*1ca!4niyzvytmei@f^8ss=!=aqqgfec+3m'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+
+import os
+if os.environ.get('RENDER', None) == 'true':
+    DEBUG = False
+else:
+    DEBUG = True
+
 
 ALLOWED_HOSTS = ['*']
 
@@ -193,3 +200,6 @@ PWA_APP_ICONS_APPLE = [
 CSRF_TRUSTED_ORIGINS = [
     "https://*.ngrok-free.app",  # or replace with your actual ngrok domain
 ]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
