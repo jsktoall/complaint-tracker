@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Complaint Tracker - Home</title>
+    <title>Complaint Tracker - Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
@@ -14,6 +14,10 @@
         h1 {
             font-size: 24px;
             margin-bottom: 20px;
+        }
+
+        .section {
+            margin-bottom: 40px;
         }
 
         ul {
@@ -36,7 +40,7 @@
         }
 
         .button-group {
-            margin-top: 30px;
+            margin-top: 10px;
             display: flex;
             flex-direction: column;
             gap: 10px;
@@ -65,19 +69,57 @@
     </style>
 </head>
 <body>
-    <h1>Welcome to the Complaint Tracker</h1>
+    <h1>Welcome to the Complaint Tracker Dashboard</h1>
+        {% if user.is_authenticated %}
+            <p>Hello, <strong>{{ user.username }}</strong>!</p>
+            <p>
+                {% if user.is_superuser %}
+                    You are logged in as <strong>Admin</strong>.
+                {% elif user.groups.first.name == "Technician" %}
+                    You are logged in as <strong>Technician</strong>.
+                {% elif user.groups.first.name == "Member" %}
+                    You are logged in as <strong>Member</strong>.
+                {% else %}
+                    Role not assigned.
+                {% endif %}
+            </p>
+        {% endif %}
 
-    <ul>
-        <li><a href="{% url 'register_complaint' %}">➕ Register New Complaint</a></li>
-        <li><a href="{% url 'unsolved_complaints' %}">📋 View Unsolved Complaints</a></li>
-        <li><a href="{% url 'solved_complaints' %}">✅ View Solved Complaints</a></li>
-    </ul>
+
+    <div class="section">
+        <h2>Common Options</h2>
+        <ul>
+            <li><a href="{% url 'unsolved_complaints' %}">📋 View Unsolved Complaints</a></li>
+            <li><a href="{% url 'solved_complaints' %}">✅ View Solved Complaints</a></li>
+        </ul>
+    </div>
+
+    {% if user.is_authenticated and not user.is_superuser %}
+        <div class="section">
+            <h2>Member Panel</h2>
+            <ul>
+                <li><a href="{% url 'register_complaint' %}">➕ Register New Complaint</a></li>
+            </ul>
+        </div>
+    {% endif %}
+
+    {% if user.is_authenticated and not user.is_superuser %}
+        <div class="section">
+            <h2>Technician Panel</h2>
+            <ul>
+                <li><a href="{% url 'unsolved_complaints' %}">🛠 Mark Complaints as Solved</a></li>
+            </ul>
+        </div>
+    {% endif %}
 
     {% if user.is_authenticated and user.is_superuser %}
-        <h2>Export Complaint Reports</h2>
-        <div class="button-group">
-            <a href="{% url 'export_report' %}?period=weekly"><button>Export Weekly Report</button></a>
-            <a href="{% url 'export_report' %}?period=monthly"><button>Export Monthly Report</button></a>
+        <div class="section">
+            <h2>Admin Panel</h2>
+            <div class="button-group">
+                <a href="{% url 'register_complaint' %}"><button>Register Complaint</button></a>
+                <a href="{% url 'export_complaints' 'weekly' %}"><button>Export Weekly Report</button></a>
+                <a href="{% url 'export_complaints' 'monthly' %}"><button>Export Monthly Report</button></a>
+            </div>
         </div>
     {% endif %}
 </body>
