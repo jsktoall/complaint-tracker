@@ -1,0 +1,39 @@
+Step-by-Step: How to Deploy Changes to Render
+🛠️ Step 1: Make and Save Your Code Changes
+Make sure all changes (HTML, Python, settings, etc.) are saved in your project folder.
+
+💾 Step 2: Stage and Commit the Changes
+Open Command Prompt in your project directory (where manage.py is located):
+
+bash
+Copy
+Edit
+git add .
+git commit -m "Your message describing the change"
+Example:
+
+bash
+Copy
+Edit
+git commit -m "Fixed duplicate complaint display issue"
+🚀 Step 3: Push the Changes to GitHub
+bash
+Copy
+Edit
+git push origin main
+This uploads your code to GitHub, which is connected to Render.
+
+⚙️ Step 4: Trigger Deployment on Render
+If Render is set to auto-deploy from GitHub (which it usually is):
+
+It will automatically detect the new changes and start building.
+
+You can visit https://dashboard.render.com → click on your web service → and watch the deployment logs.
+
+If you don’t see the build start automatically, click the "Manual Deploy" → "Deploy latest commit" button.
+
+🔄 Step 5: Wait for Deployment to Finish
+You’ll see a green “Live” label once it’s deployed successfully. Takes ~1–3 minutes usually.
+
+📱 Step 6: Open Your Website URL
+Open the URL Render gave you (like https://your-app-name.onrender.com) on any browser or mobile device and test the changes.
